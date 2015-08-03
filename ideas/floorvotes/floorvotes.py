@@ -14,8 +14,8 @@ class Item(object):
     return self.password == password
   
   def add_vote(self, user, vote):
-    self.rollcall.add_vote(user, vote)
-    user.voting_record[self.item_id] = (vote, self.name)
+    voteObj = self.rollcall.add_vote(user, vote)
+    user.voting_record[self.item_id] = voteObj
 
 class Vote(object):
   
@@ -38,20 +38,23 @@ class User(object):
   def get_ayes(self):
     ayes = []
     for i in sorted(self.voting_record.keys()):
-      if (self.voting_record[i][0] == RollCall.Aye):
-        ayes.append(self.voting_record[i][1])
+      if (self.voting_record[i].vote == Vote.Aye):
+        ayes.append(self.voting_record[i].item)
+    return ayes
   
   def get_nays(self):
     nays = []
     for i in sorted(self.voting_record.keys()):
-      if (self.voting_record[i][0] == RollCall.Nay):
-        nays.append(self.voting_record[i][1])
+      if (self.voting_record[i].vote == Vote.Nay):
+        nays.append(self.voting_record[i].item)
+    return nays
   
   def get_presents(self):
     present = []
     for i in sorted(self.voting_record.keys()):
-      if (self.voting_record[i][0] == RollCall.Present):
-        present.append(self.voting_record[i][1])
+      if (self.voting_record[i].vote == Vote.Present):
+        present.append(self.voting_record[i].item)
+    return present
 
 class RollCall(object):
   
@@ -62,7 +65,9 @@ class RollCall(object):
   def add_vote(self, user, vote):
     self.voteslist = [castvote for castvote in self.voteslist if castvote.user != user]
     timestamp = datetime.datetime.now()
-    self.voteslist.append(Vote(self.item, user, vote, timestamp.strftime("%Y-%m-%d %H:%M")))
+    voteObj = Vote(self.item, user, vote, timestamp.strftime("%Y-%m-%d %H:%M"))
+    self.voteslist.append(voteObj)
+    return voteObj
   
   def get_rollcount(self):
     ayes = 0

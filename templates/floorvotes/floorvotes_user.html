@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>Floor Votes</title>
+    <meta content="utf-8" http-equiv="encoding">
+    
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container" role="main">
+      <h1>Voting record of {[ user.username ]}</h1>
+      <div class="row">
+        <h3>Aye</h3>
+        <ul class="list-group">
+        {% for vote in user.get_ayes() %}
+          <a href="/floorvotes/item/{[ vote.item_id ]}" class="list-group-item">{[ vote.name ]}</a>
+        {% endfor %}
+        </ul>
+      </div>
+      <div class="row">
+        <h3>Nay</h3>
+        <ul class="list-group">
+        {% for vote in user.get_nays() %}
+          <a href="/floorvotes/item/{[ vote.item_id ]}" class="list-group-item">{[ vote.name ]}</a>
+        {% endfor %}
+        </ul>
+      </div>
+      <div class="row">
+        <h3>Present</h3>
+        <ul class="list-group">
+        {% for vote in user.get_presents() %}
+          <a href="/floorvotes/item/{[ vote.item_id ]}" class="list-group-item">{[ vote.name ]}</a>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
+    
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

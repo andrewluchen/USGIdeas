@@ -52,7 +52,7 @@
             <tbody>
             {% for vote in item.rollcall.voteslist %}
               <tr>
-                <td>{[ vote.user.username ]}</td>
+                <td><a href='/{[ floorvotes_path ]}/user/{[ vote.user.username ]}'>{[ vote.user.username ]}</a></td>
                 <td>{[ vote.vote ]}</td>
                 <td>{[ vote.timestamp ]}</td>
               </tr>
