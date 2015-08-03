@@ -7,19 +7,35 @@ app = Flask(__name__)
 app.jinja_env.variable_start_string = '[['
 app.jinja_env.variable_end_string = ']]'
 
-app1_name = "Floor Votes"
-app1_dir = "floorvotes"
+#Floor Votes Idea
+
+import ideas.floorvotes.floorvotes
+
+floorvotes_name = "Floor Votes"
+floorvotes_path = "floorvotes"
+
+@app.route('/' + floorvotes_path)
+def floorvotes():
+  return render_template('floorvotes.html')
+
+@app.route('/' + floorvotes_path + '/vote/' + "<int:votenumber>")
+def floorvotes_vote(votenumber):
+  vote = floorvotes.get_vote(votenumber)
+  return render_template('floorvotes_vote.html')
+
+@app.route('/' + floorvotes_path + '/user/' + "<username>")
+def floorvotes_user(username):
+  user = floorvotes.get_user(username)
+  return render_template('floorvotes_user.html',
+                         user = user)
+
+# Main Index
 
 @app.route('/')
 def index():
   return render_template('index.html',
-                         app1_name = app1_name,
-                         app1_dir = app1_dir)
-
-
-@app.route('/floorvotes')
-def index():
-  return render_template('index.html')
+                         floorvotes_name = floorvotes_name,
+                         floorvotes_path = floorvotes_path)
 
 if __name__ == "__main__":
   # Bind to PORT if defined, otherwise default to 5000.
