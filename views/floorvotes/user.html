@@ -16,7 +16,6 @@
     <div class="container" role="main" ng-app="myApp" ng-controller="userCtrl">
       <h1>Voting record of {{ user.username }}</h1>
       <div class="row">
-        {{ user }}
         <h3>Aye</h3>
         <ul class="list-group">
           <a href="/floorvotes/item/{{ vote.item_id }}" class="list-group-item" ng-repeat="vote in user.ayes">{{ vote.name }}</a>
