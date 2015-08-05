@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>Floor Votes</title>
+    <meta content="utf-8" http-equiv="encoding">
+    
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    
+    <!-- Bootstrap core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- App -->
+    <script src="/static/floorvotes.js"></script>
+</head>
+<body>
+    <p>Warning! This site is running on system memory which is not backed by a database. The app can be refreshed and data will be lost at any time. (i.e. Any time I make a change, the entire website gets nuked.)</p>
+    
+    
+    <div class="container" role="main" ng-app="myApp" ng-controller="indexCtrl">
+      <div class="row">
+        <div class="col-md-6">
+          <h1>Floor Votes</h1>
+          <div class="list-group striped">
+            <div>
+              <a href="{{ dir }}/item/{{ item.item_id }}" class="list-group-item" ng-repeat="item in itemlist">
+                {{ count_votes(item) }}
+                <h4 class="list-group-item-heading">{{ item.name }}</h4>
+                <p class="list-group-item-text">Ayes: {{ item.ayes }}  Nays: {{ item.nays }}  Present: {{ item.presents }}</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h1>Create New Poll</h1>
+          Editor will go here
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
