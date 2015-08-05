@@ -25,13 +25,12 @@ var RollCall = {
       this.votelist = this.votelist.filter(function(value) {
         return value.user != user;
       });
-      var today = new Date();
-      var dd = today.getDate();
-      var mm = today.getMonth()+1; // January is 0!
-      var yyyy = today.getFullYear();
-      var hour = today.getHours();
-      var minutes = today.getMinutes();
-      var timestamp = mm+'/'+dd+'/'+yyyy+'  '+hour+':'+minutes;
+      var now = new Date();
+      var options = {
+        weekday: "long", year: "numeric", month: "short",
+        day: "numeric", hour: "2-digit", minute: "2-digit"
+      };
+      var timestamp = (now.getMonth() + 1) + "/" + now.getDate() + "/" + now.getFullYear() + "  " + now.toLocaleTimeString("en-us", options);
       var voteObj = new Vote.Vote(user, party, vote, timestamp);
       this.votelist.push(voteObj);
     };
