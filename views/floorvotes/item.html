@@ -30,12 +30,10 @@
       <div class="col-lg-4">
         <input type="text" class="form-control" aria-label="..." placeholder="Enter Username" ng-model=username>
       </div>
-      <div class="row">
-        <select class="selectpicker" data-style="btn-inverse" ng-model="user_party">
-          <option ng-repeat="party in party_types">{{ party.name }}</option>
+      <div class="form-inline">
+        <select class="form-control" ng-model="user_party" ng-options="party.name for party in party_types">
         </select>
-        <select class="selectpicker" data-style="btn-inverse" ng-model="user_vote">
-          <option ng-repeat="vote in vote_types">{{ vote.name }}</option>
+        <select class="form-control" ng-model="user_vote" ng-options="vote.name for vote in vote_types">
         </select>
         <button type="button" class="btn btn-default" ng-click="submit()">Vote!</button>
       </div>
@@ -55,7 +53,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="vote in item.rollcall.votelist">
+            <tr class="{{ party_color(vote.party) }}" ng-repeat="vote in item.rollcall.votelist">
               <td><a href='/{{ dir }}/user/{{ vote.user.username }}'>{{ vote.user.username }}</a></td>
               <td>{{ vote.party }}</td>
               <td>{{ vote.vote }}</td>

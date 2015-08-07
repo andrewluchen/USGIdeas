@@ -37,6 +37,26 @@ app.controller('indexCtrl', function($scope, $http, $sce) {
     item.presents = presents;
   };
   
+  $scope.onTextChange = function () {
+    var result = XBBCODE.process({
+      text: $scope.body_bbcode,
+      removeMisalignedTags: false,
+      addInLineBreaks: false
+    });
+    $scope.body_html = result.html;
+  }
+  
+  $scope.submit_new = function () {
+    $http.post(window.location.href, {'body_html':$scope.body_html}).
+    success(function (response) {
+      $scope.itemlist = response.itemlist.reverse();
+    });
+  }
+  
+  $scope.getHtml = function(html){
+    return $sce.trustAsHtml(html);
+  };
+  
 });
 
 app.controller('itemCtrl', function($scope, $http, $sce) {
@@ -58,9 +78,9 @@ app.controller('itemCtrl', function($scope, $http, $sce) {
   
   refresh();
   
-  var RED = {name : 'Republican'};
-  var BLUE = {name : 'Democrat'};
-  var GREEN = {name : 'Independent'};
+  var RED = {name : 'Republican', color : 'danger'};
+  var BLUE = {name : 'Democrat', color : 'info'};
+  var GREEN = {name : 'Independent', color : 'success'};
   var AYE = {name : 'Aye'};
   var NAY = {name : 'Nay'};
   var PRESENT = {name : 'Present'};
@@ -68,11 +88,12 @@ app.controller('itemCtrl', function($scope, $http, $sce) {
   $scope.party_types = [BLUE, RED, GREEN];
   $scope.vote_types = [AYE, NAY, PRESENT];
   $scope.username = "";
-  $scope.user_party = GREEN.name;
-  $scope.user_vote = AYE.name;
+  $scope.user_party = GREEN;
+  $scope.user_vote = AYE;
   
   $scope.submit = function() {
-    $http.put('window.location.href',{'item_id':$scope.item.item_id, 'username': $scope.username, 'party':$scope.user_party, 'vote':$scope.user_vote}).
+    $http.put(window.location.href,{'item_id':$scope.item.item_id,
+              'username': $scope.username, 'party':$scope.user_party.name, 'vote':$scope.user_vote.name}).
       success(function (response) {
         $scope.item = response.item;
         $scope.count_votes($scope.item);
@@ -102,6 +123,15 @@ app.controller('itemCtrl', function($scope, $http, $sce) {
     item.nays = nays;
     item.presents = presents;
   };
+  
+  $scope.party_color = function(party) {
+    if (party == BLUE.name)
+      return BLUE.color;
+    if (party == RED.name)
+      return RED.color;
+    if (party == GREEN.name)
+      return GREEN.color;
+  }
   
 });
 

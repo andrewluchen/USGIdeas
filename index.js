@@ -40,6 +40,10 @@ app.get('/floorvotes', function(request, response) {
 app.get('/floorvotes/api', function(request, response) {
   response.json({itemlist : floorvotes.itemlist});
 });
+app.post('/floorvotes', function(request, response) {
+  floorvotes.new_item("Temporary Title", request.body.body_html, "");
+  response.json({itemlist : floorvotes.itemlist});
+});
 
 app.get('/floorvotes/item/:item_id', function(request, response) {
   response.render('floorvotes/item.html');

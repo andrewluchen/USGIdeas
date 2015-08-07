@@ -9,6 +9,10 @@
     <!-- Bootstrap core CSS -->
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     
+    <!-- XBBCode -->
+    <script src="/static/xbbcode/xbbcode.js"></script>
+    <link href="/static/xbbcode/xbbcode.css" rel="stylesheet">
+    
     <!-- App -->
     <script src="/static/floorvotes.js"></script>
 </head>
@@ -18,21 +22,20 @@
     
     <div class="container" role="main" ng-app="myApp" ng-controller="indexCtrl">
       <div class="row">
-        <div class="col-md-6">
-          <h1>Floor Votes</h1>
-          <div class="list-group striped">
-            <div>
-              <a href="{{ dir }}/item/{{ item.item_id }}" class="list-group-item" ng-repeat="item in itemlist">
-                {{ count_votes(item) }}
-                <h4 class="list-group-item-heading">{{ item.name }}</h4>
-                <p class="list-group-item-text">Ayes: {{ item.ayes }}  Nays: {{ item.nays }}  Present: {{ item.presents }}</p>
-              </a>
-            </div>
+        <h1>Create New Poll</h1>
+        <textarea class="form-control" rows="4" ng-model="body_bbcode" ng-change="onTextChange()"></textarea>
+         <button class="btn btn-default" ng-click="submit_new()">Submit</button>
+        <div ng-bind-html="getHtml(body_html)"></div>
+        <br>
+        <h1>Floor Votes</h1>
+        <div class="list-group striped">
+          <div>
+            <a href="{{ dir }}/item/{{ item.item_id }}" class="list-group-item" ng-repeat="item in itemlist">
+              {{ count_votes(item) }}
+              <h4 class="list-group-item-heading">{{ item.name }}</h4>
+              <p class="list-group-item-text">Ayes: {{ item.ayes }}  Nays: {{ item.nays }}  Present: {{ item.presents }}</p>
+            </a>
           </div>
-        </div>
-        <div class="col-md-6">
-          <h1>Create New Poll</h1>
-          Editor will go here
         </div>
       </div>
     </div>
